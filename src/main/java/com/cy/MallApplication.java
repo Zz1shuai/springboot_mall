@@ -1,13 +1,15 @@
 package com.cy;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringbootMallApplication {
+@MapperScan(basePackages = "com.cy.dao")
+public class MallApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringbootMallApplication.class, args);
+        SpringApplication.run(MallApplication.class, args);
     }
 
 }
