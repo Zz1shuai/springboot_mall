@@ -61,11 +61,11 @@ public class CategoryServiceImpl implements ICategoryService {
         List<Category> categories = categoryMapper.selectAll();
         findSubCategoryId(id, resultSet, categories);
     }
+
     private void findSubCategoryId(Integer id, Set<Integer> resultSet, List<Category> categories) {
         for (Category category : categories) {
             if (category.getParentId().equals(id)) {
                 resultSet.add(category.getId());
-
                 findSubCategoryId(category.getId(), resultSet, categories);
             }
         }
