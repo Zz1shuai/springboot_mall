@@ -8,10 +8,13 @@ import java.util.List;
 public interface ShippingMapper {
     int deleteByPrimaryKey(Integer id);
 
+    int insert(Shipping record);
+
     int deleteByIdAndUid(@Param("uid") Integer uid,
                          @Param("shippingId") Integer shippingId);
 
-    int insert(Shipping record);
+    Shipping selectByUidAndShippingId(@Param("uid") Integer uid,
+                                      @Param("shippingId") Integer shippingId);
 
     int insertSelective(Shipping record);
 
