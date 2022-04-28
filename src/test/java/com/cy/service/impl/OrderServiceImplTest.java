@@ -16,6 +16,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @Create by 猪小帅
@@ -23,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @mood happy
  */
 @Slf4j
+@Transactional
 public class OrderServiceImplTest extends MallApplicationTests {
 
     @Autowired
@@ -47,16 +49,37 @@ public class OrderServiceImplTest extends MallApplicationTests {
         ResponseVo<CartVo> add = cartService.add(uid, cartAddForm);
         Assert.assertEquals(ResponseEnum.SUCCESS.getCode(), add.getStatus());
     }
+
     @Test
-    public void create() {
+    public void creatTest() {
+        ResponseVo<OrderVo> responseVo = create();
+        Assert.assertEquals(ResponseEnum.SUCCESS.getCode(), responseVo.getStatus());
+    }
+    private ResponseVo<OrderVo> create() {
         ResponseVo<OrderVo> responseVo = orderService.create(uid, shippingId);
         log.info("result={}", gson.toJson(responseVo));
-        Assert.assertEquals(ResponseEnum.SUCCESS.getCode(), responseVo.getStatus());
+        return responseVo;
     }
 
     @Test
     public void list() {
         ResponseVo<PageInfo> responseVo = orderService.list(uid, 1,2);
+        log.info("result={}", gson.toJson(responseVo));
+        Assert.assertEquals(ResponseEnum.SUCCESS.getCode(), responseVo.getStatus());
+    }
+
+    @Test
+    public void detail() {
+        ResponseVo<OrderVo> vo = create();
+        ResponseVo<OrderVo> responseVo = orderService.detail(uid, vo.getData().getOrderNo());
+        log.info("result={}", gson.toJson(responseVo));
+        Assert.assertEquals(ResponseEnum.SUCCESS.getCode(), responseVo.getStatus());
+    }
+
+    @Test
+    public void cancel() {
+        ResponseVo<OrderVo> vo = create();
+        ResponseVo responseVo = orderService.cancel(uid, vo.getData().getOrderNo());
         log.info("result={}", gson.toJson(responseVo));
         Assert.assertEquals(ResponseEnum.SUCCESS.getCode(), responseVo.getStatus());
     }
