@@ -48,6 +48,7 @@ public class OrderServiceImpl implements IOrderService {
 
     @Autowired
     private OrderItemMapper orderItemMapper;
+
     @Override
     @Transactional
     public ResponseVo<OrderVo> create(Integer uid, Integer shippingId) {
